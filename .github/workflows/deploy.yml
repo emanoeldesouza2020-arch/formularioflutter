@@ -1,4 +1,4 @@
-name: Deploy
+name: Flutter Web
 
 on:
   push:
@@ -6,17 +6,16 @@ on:
       - main
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+
+      - uses: subosito/flutter-action@v2
         with:
-          node-version: '20'
-      - name: Install dependencies
-        run: npm install
-      - name: Build
-        run: npm run build
-      - name: Deploy
-        run: echo "Deploy completed"
+          channel: stable
+
+      - run: flutter pub get
+
+      - run: flutter build web
