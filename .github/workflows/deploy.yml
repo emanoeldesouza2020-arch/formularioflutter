@@ -1,4 +1,9 @@
-name: Deploy Flutter Web
+name: Deploy Flutter Web to GitHub Pages
+
+permissions:
+  pages: write
+  id-token: write
+  contents: read
 
 on:
   push:
@@ -6,7 +11,7 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,17 +22,15 @@ jobs:
           channel: stable
 
       - run: flutter pub get
-      - run: flutter build web --base-href "/formularioflutter/"
+      - run: flutter build web --release
 
       - uses: actions/upload-pages-artifact@v3
         with:
           path: build/web
 
   deploy:
-    needs: build-and-deploy
+    needs: build
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
 
     steps:
       - uses: actions/deploy-pages@v4
