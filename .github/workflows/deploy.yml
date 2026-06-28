@@ -21,7 +21,7 @@ jobs:
           channel: stable
 
       - run: flutter pub get
-      - run: flutter build web
+      - run: flutter build web --base-href "/formularioflutter/"
 
       - uses: actions/upload-pages-artifact@v3
         with:
